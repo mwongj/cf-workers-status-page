@@ -12,6 +12,8 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
   if (typeof window !== 'undefined') {
     let maxAvg = 0
     let histogramAverages = {}
+    console.log('MonitorID:', monitorId)
+    console.log('kvMonitor', kvMonitor)
 
     Array.from(Array(config.settings.daysInHistogram).keys()).forEach((_) => {
       date.setDate(date.getDate() + 1)
@@ -68,7 +70,9 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
               histogramAverages[dayInHistogram],
             )
             if (maxAvg > 0 && histogramAverages[dayInHistogram] !== undefined) {
-              height = `${Math.round(histogramAverages[dayInHistogram] / maxAvg)}`
+              height = `${Math.round(
+                histogramAverages[dayInHistogram] / maxAvg,
+              )}`
             }
           }
         }
