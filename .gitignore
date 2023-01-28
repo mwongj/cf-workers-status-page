@@ -118,6 +118,7 @@ dist
 **/*.backup.*
 **/*.back.*
 
+.yarn/
 node_modules
 
 *.sublime*
