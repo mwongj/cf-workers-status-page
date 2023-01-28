@@ -13,17 +13,21 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
     let maxResponse = 0
     let histogramAverages = {}
     Array.from(Array(config.settings.daysInHistogram).keys()).map((key) => {
-      const checks = Array(kvMonitor.checks[key].res).keys()
-      let sum = 0
-      checks.forEach((locationKey) => {
-        const avg = kvMonitor.checks[dayInHistogram].res[locationKey].a
-        if (avg > maxResponse) {
-          maxResponse = avg
-        }
-        sum += avg
-      })
-      histogramAverages[key] =
-        checks.length && checks.length > 0 ? sum / checks.length : undefined
+      if (kvMonitor.checks[key] && kvMonitor.checks[key].res) {
+        const checks = Array(kvMonitor.checks[key].res).keys()
+        let sum = 0
+        checks.forEach((locationKey) => {
+          if (!kvMonitor.checks[dayInHistogram].res[locationKey].a) return;
+          
+          const avg = kvMonitor.checks[dayInHistogram].res[locationKey].a
+          if (avg > maxResponse) {
+            maxResponse = avg
+          }
+          sum += avg
+        })
+        histogramAverages[key] =
+          checks.length && checks.length > 0 ? sum / checks.length : undefined
+      }
     })
 
     content = Array.from(Array(config.settings.daysInHistogram).keys()).map(
@@ -47,7 +51,7 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
             bg = 'green'
             dayInHistogramLabel = config.settings.dayInHistogramOperational
 
-            if (maxResponse > 0) {
+            if (maxResponse > 0 && histogramAverages[dayInHistogram] !== undefined) {
               height = `${histogramAverages[dayInHistogram] / maxResponse}%`
             }
           }
