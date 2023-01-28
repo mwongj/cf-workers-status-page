@@ -22,7 +22,7 @@
   }
 
   .histogram {
-    @apply px-42 w-full mx-auto;
+    @apply h-24 w-full mx-auto;
   }
   .hitbox {
     align-items: flex-end;
