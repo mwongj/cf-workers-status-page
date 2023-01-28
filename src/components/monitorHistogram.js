@@ -37,7 +37,7 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
 
         let bg = ''
         let dayInHistogramLabel = config.settings.dayInHistogramNoData
-        let height = '100%'
+        let height = '100'
 
         // filter all dates before first check, then check the rest
         if (kvMonitor && kvMonitor.firstCheck <= dayInHistogram) {
@@ -52,7 +52,7 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
             dayInHistogramLabel = config.settings.dayInHistogramOperational
 
             if (maxResponse > 0 && histogramAverages[dayInHistogram] !== undefined) {
-              height = `${histogramAverages[dayInHistogram] / maxResponse}%`
+              height = `${histogramAverages[dayInHistogram] / maxResponse}`
             }
           }
         }
@@ -60,7 +60,7 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
         return (
           <div key={key} className="hitbox tooltip">
             <div className="bar-container">
-              <div className={`${bg} bar`} style={{ height: height}} />
+              <div className={`${bg} bar`} style={{ height: height + '%'}} />
             </div>
             <div className="content text-center py-1 px-2 mt-2 left-1/2 -ml-20 w-40 text-xs">
               {dayInHistogram}
