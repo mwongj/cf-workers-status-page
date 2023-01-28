@@ -22,17 +22,20 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
         kvMonitor.checks.hasOwnProperty(dayInHistogram) &&
         kvMonitor.checks[dayInHistogram].hasOwnProperty('res')
       ) {
+        let totalResponses = 0
         Object.keys(kvMonitor.checks[dayInHistogram].res).map((locationKey) => {
-          const currentLocationAvg = kvMonitor.checks[dayInHistogram].res[locationKey].a
+          const currentLocationAvg =
+            kvMonitor.checks[dayInHistogram].res[locationKey].a
           console.log(`Location ${locationKey} has avg: ${currentLocationAvg}`)
           if (currentLocationAvg > maxAvg) {
             maxAvg = currentLocationAvg
           }
           sum += currentLocationAvg
+          totalResponses += 1
         })
 
         histogramAverages[dayInHistogram] =
-          checks.length && checks.length > 0 ? sum / checks.length : undefined
+          totalResponses > 0 ? Math.round(sum / totalResponses) : undefined
       }
     })
 
@@ -64,11 +67,8 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
               'Histogram avg for day',
               histogramAverages[dayInHistogram],
             )
-            if (
-              maxAvg > 0 &&
-              histogramAverages[dayInHistogram] !== undefined
-            ) {
-              height = `${histogramAverages[dayInHistogram] / maxAvg}`
+            if (maxAvg > 0 && histogramAverages[dayInHistogram] !== undefined) {
+              height = `${Math.round(histogramAverages[dayInHistogram] / maxAvg)}`
             }
           }
         }
