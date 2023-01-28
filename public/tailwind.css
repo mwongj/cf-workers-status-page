@@ -22,7 +22,7 @@
   }
 
   .histogram {
-    @apply h-6 w-full mx-auto;
+    @apply px-42 w-full mx-auto;
   }
   .hitbox {
     align-items: flex-end;
@@ -37,7 +37,6 @@
     padding-bottom: 1px;
     height: 100%;
     width: 85%;
-    border-radius: 100px;
   }
 
   .bar.green {
