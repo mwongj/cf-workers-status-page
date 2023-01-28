@@ -10,6 +10,22 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
   let content = null
 
   if (typeof window !== 'undefined') {
+    let maxResponse = 0
+    let histogramAverages = {}
+    Array.from(Array(config.settings.daysInHistogram).keys()).map((key) => {
+      const checks = Array(kvMonitor.checks[key].res).keys()
+      let sum = 0
+      checks.forEach((locationKey) => {
+        const avg = kvMonitor.checks[dayInHistogram].res[locationKey].a
+        if (avg > maxResponse) {
+          maxResponse = avg
+        }
+        sum += avg
+      })
+      histogramAverages[key] =
+        checks.length && checks.length > 0 ? sum / checks.length : undefined
+    })
+
     content = Array.from(Array(config.settings.daysInHistogram).keys()).map(
       (key) => {
         date.setDate(date.getDate() + 1)
@@ -17,6 +33,7 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
 
         let bg = ''
         let dayInHistogramLabel = config.settings.dayInHistogramNoData
+        let height = '100%'
 
         // filter all dates before first check, then check the rest
         if (kvMonitor && kvMonitor.firstCheck <= dayInHistogram) {
@@ -29,12 +46,18 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
           } else {
             bg = 'green'
             dayInHistogramLabel = config.settings.dayInHistogramOperational
+
+            if (maxResponse > 0) {
+              height = `${histogramAverages[dayInHistogram] / maxResponse}%`
+            }
           }
         }
 
         return (
           <div key={key} className="hitbox tooltip">
-            <div className={`${bg} bar`} />
+            <div className="bar-container">
+              <div className={`${bg} bar`} style={`height: ${height}`} />
+            </div>
             <div className="content text-center py-1 px-2 mt-2 left-1/2 -ml-20 w-40 text-xs">
               {dayInHistogram}
               <br />

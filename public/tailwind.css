@@ -32,13 +32,16 @@
     padding: 1px;
     border-radius: 3.75px;
   }
-  .bar {
+  .bar-container {
     @apply bg-gray-300 dark:bg-gray-600;
-    padding-bottom: 1px;
     height: 100%;
+  }
+  .bar {
+    padding-bottom: 1px;
+    position: absolute;
+    bottom: 0;
     width: 85%;
   }
-
   .bar.green {
     @apply bg-green-400 dark:bg-green-700;
   }
