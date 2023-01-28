@@ -4,8 +4,10 @@ import MonitorDayAverage from './monitorDayAverage'
 
 export default function MonitorHistogram({ monitorId, kvMonitor }) {
   // create date and set date - daysInHistogram for the first day of the histogram
-  let date = new Date()
-  date.setDate(date.getDate() - config.settings.daysInHistogram)
+  let dateForAverages = new Date()
+  dateForAverages.setDate(dateForAverages.getDate() - config.settings.daysInHistogram)
+  let dateForHistogram = new Date()
+  dateForHistogram.setDate(dateForHistogram.getDate() - config.settings.daysInHistogram)
 
   let content = null
 
@@ -16,8 +18,8 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
     console.log('kvMonitor', kvMonitor)
 
     Array.from(Array(config.settings.daysInHistogram).keys()).forEach((_) => {
-      date.setDate(date.getDate() + 1)
-      const dayInHistogram = date.toISOString().split('T')[0]
+      dateForAverages.setDate(dateForAverages.getDate() + 1)
+      const dayInHistogram = dateForAverages.toISOString().split('T')[0]
       let sum = 0
 
       if (
@@ -49,8 +51,8 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
 
     content = Array.from(Array(config.settings.daysInHistogram).keys()).map(
       (key) => {
-        date.setDate(date.getDate() + 1)
-        const dayInHistogram = date.toISOString().split('T')[0]
+        dateForHistogram.setDate(dateForHistogram.getDate() + 1)
+        const dayInHistogram = dateForHistogram.toISOString().split('T')[0]
 
         let bg = ''
         let dayInHistogramLabel = config.settings.dayInHistogramNoData
