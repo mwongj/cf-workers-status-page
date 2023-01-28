@@ -18,7 +18,7 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
         let sum = 0
         checks.forEach((locationKey) => {
           if (!kvMonitor.checks[dayInHistogram].res[locationKey].a) return;
-          
+
           const avg = kvMonitor.checks[dayInHistogram].res[locationKey].a
           if (avg > maxResponse) {
             maxResponse = avg
@@ -60,7 +60,7 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
         return (
           <div key={key} className="hitbox tooltip">
             <div className="bar-container">
-              <div className={`${bg} bar`} style={`height: ${height}`} />
+              <div className={`${bg} bar`} style={{ height: height}} />
             </div>
             <div className="content text-center py-1 px-2 mt-2 left-1/2 -ml-20 w-40 text-xs">
               {dayInHistogram}
