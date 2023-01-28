@@ -36,6 +36,9 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
           totalResponses += 1
         })
 
+        console.log('Monitor sum', sum);
+        console.log('Total responses', totalResponses);
+
         histogramAverages[dayInHistogram] =
           totalResponses > 0 ? Math.round(sum / totalResponses) : undefined
       }
@@ -51,7 +54,7 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
 
         let bg = ''
         let dayInHistogramLabel = config.settings.dayInHistogramNoData
-        let height = '100'
+        let height = '0'
 
         // filter all dates before first check, then check the rest
         if (kvMonitor && kvMonitor.firstCheck <= dayInHistogram) {
@@ -69,7 +72,7 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
               'Histogram avg for day',
               histogramAverages[dayInHistogram],
             )
-            if (maxAvg > 0 && histogramAverages[dayInHistogram] !== undefined) {
+            if (maxAvg > 0 && histogramAverages.hasOwnProperty(dayInHistogram)) {
               height = `${Math.round(
                 histogramAverages[dayInHistogram] / maxAvg,
               )}`
