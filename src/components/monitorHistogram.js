@@ -36,6 +36,9 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
           totalResponses += 1
         })
 
+        console.log('Monitor sum', sum);
+        console.log('Total responses', totalResponses);
+
         histogramAverages[dayInHistogram] =
           totalResponses > 0 ? Math.round(sum / totalResponses) : undefined
       }
@@ -69,7 +72,7 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
               'Histogram avg for day',
               histogramAverages[dayInHistogram],
             )
-            if (maxAvg > 0 && histogramAverages[dayInHistogram] !== undefined) {
+            if (maxAvg > 0 && histogramAverages.hasOwnProperty(dayInHistogram)) {
               height = `${Math.round(
                 histogramAverages[dayInHistogram] / maxAvg,
               )}`
