@@ -10,30 +10,34 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
   let content = null
 
   if (typeof window !== 'undefined') {
-    let maxResponse = 0
+    let maxAvg = 0
     let histogramAverages = {}
-    Array.from(Array(config.settings.daysInHistogram).keys()).map((key) => {
-      if (kvMonitor.checks[key] && kvMonitor.checks[key].res) {
-        const checks = Array(kvMonitor.checks[key].res).keys()
-        console.log(`kvMonitor checks for ${key} exist with ${checks.length} checks.`);
-        let sum = 0
-        checks.forEach((locationKey) => {
-          if (kvMonitor.checks[dayInHistogram].res[locationKey].a !== undefined) {
-            const avg = kvMonitor.checks[dayInHistogram].res[locationKey].a;
-            console.log(`Location ${key} has avg: ${avg}`);
-            if (avg > maxResponse) {
-              maxResponse = avg;
-            }
-            sum += avg;
+
+    Array.from(Array(config.settings.daysInHistogram).keys()).forEach((_) => {
+      date.setDate(date.getDate() + 1)
+      const dayInHistogram = date.toISOString().split('T')[0]
+      let sum = 0
+
+      if (
+        kvMonitor.checks.hasOwnProperty(dayInHistogram) &&
+        kvMonitor.checks[dayInHistogram].hasOwnProperty('res')
+      ) {
+        Object.keys(kvMonitor.checks[dayInHistogram].res).map((locationKey) => {
+          const currentLocationAvg = kvMonitor.checks[dayInHistogram].res[locationKey].a
+          console.log(`Location ${key} has avg: ${currentLocationAvg}`)
+          if (currentLocationAvg > maxAvg) {
+            maxAvg = currentLocationAvg
           }
+          sum += currentLocationAvg
         })
+
         histogramAverages[key] =
-          checks.length && checks.length > 0 ? sum / checks.length : undefined;
+          checks.length && checks.length > 0 ? sum / checks.length : undefined
       }
     })
 
-    console.log('Histogram averages', histogramAverages);
-    console.log('Max response', maxResponse);
+    console.log('Histogram averages', histogramAverages)
+    console.log('Max avg', maxAvg)
 
     content = Array.from(Array(config.settings.daysInHistogram).keys()).map(
       (key) => {
@@ -56,9 +60,15 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
             bg = 'green'
             dayInHistogramLabel = config.settings.dayInHistogramOperational
 
-            console.log('Histogram avg for day', histogramAverages[dayInHistogram]);
-            if (maxResponse > 0 && histogramAverages[dayInHistogram] !== undefined) {
-              height = `${histogramAverages[dayInHistogram] / maxResponse}`
+            console.log(
+              'Histogram avg for day',
+              histogramAverages[dayInHistogram],
+            )
+            if (
+              maxAvg > 0 &&
+              histogramAverages[dayInHistogram] !== undefined
+            ) {
+              height = `${histogramAverages[dayInHistogram] / maxAvg}`
             }
           }
         }
@@ -66,7 +76,7 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
         return (
           <div key={key} className="hitbox tooltip">
             <div className="bar-container">
-              <div className={`${bg} bar`} style={{ height: height + '%'}} />
+              <div className={`${bg} bar`} style={{ height: height + '%' }} />
             </div>
             <div className="content text-center py-1 px-2 mt-2 left-1/2 -ml-20 w-40 text-xs">
               {dayInHistogram}
