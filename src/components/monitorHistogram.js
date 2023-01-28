@@ -70,12 +70,16 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
 
             console.log(
               'Histogram avg for day',
+              histogramAverages,
+              dayInHistogram,
               histogramAverages[dayInHistogram],
             )
+
+            console.log('Final max avg', maxAvg);
             if (maxAvg > 0 && histogramAverages.hasOwnProperty(dayInHistogram)) {
-              height = `${Math.round(
-                histogramAverages[dayInHistogram] / maxAvg,
-              )}`
+              const val = Math.round((histogramAverages[dayInHistogram] / maxAvg) * 100);
+              console.log('Calculating height', val)
+              height = `${val}`
             }
           }
         }
