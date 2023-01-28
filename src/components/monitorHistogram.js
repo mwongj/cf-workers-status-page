@@ -24,14 +24,14 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
       ) {
         Object.keys(kvMonitor.checks[dayInHistogram].res).map((locationKey) => {
           const currentLocationAvg = kvMonitor.checks[dayInHistogram].res[locationKey].a
-          console.log(`Location ${key} has avg: ${currentLocationAvg}`)
+          console.log(`Location ${locationKey} has avg: ${currentLocationAvg}`)
           if (currentLocationAvg > maxAvg) {
             maxAvg = currentLocationAvg
           }
           sum += currentLocationAvg
         })
 
-        histogramAverages[key] =
+        histogramAverages[dayInHistogram] =
           checks.length && checks.length > 0 ? sum / checks.length : undefined
       }
     })
