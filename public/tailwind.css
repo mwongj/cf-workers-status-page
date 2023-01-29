@@ -14,7 +14,7 @@
 
 @layer components {
   .card {
-    @apply p-4 bg-white border border-gray-200 dark:bg-gray-700 dark:border-gray-600 shadow p-4 mb-2;
+    @apply p-4 bg-white dark:bg-gray-700 shadow;
   }
 
   .pill {
