@@ -65,15 +65,15 @@ export default function MonitorHistogram({ monitorId, kvMonitor }) {
           } else {
             bg = 'green'
             dayInHistogramLabel = config.settings.dayInHistogramOperational
+          }
 
-            if (
-              maxAvg > 0 &&
-              histogramAverages.hasOwnProperty(dayInHistogram)
-            ) {
-              height = Math.round(
-                (histogramAverages[dayInHistogram] / maxAvg) * 100,
-              )
-            }
+          if (
+            maxAvg > 0 &&
+            histogramAverages.hasOwnProperty(dayInHistogram)
+          ) {
+            height = Math.round(
+              (histogramAverages[dayInHistogram] / maxAvg) * 100,
+            )
           }
         }
 
