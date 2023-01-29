@@ -7,7 +7,7 @@ const infoIcon = (
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
     fill="currentColor"
-    className="h-5 mr-2 mx-auto text-blue-500 dark:text-blue-400"
+    className="h-5 mr-2 mx-auto text-blue-900 dark:text-blue-300"
   >
     <path
       fillRule="evenodd"
